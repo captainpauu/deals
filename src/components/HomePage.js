@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import DealsAPI from "../apis/DealsAPI";
 import DealItem from "./DealItem";
+import Search from "./Search";
 
 function HomePage(props) {
     const [dealList, setDealList] = useState([]);
@@ -34,34 +35,37 @@ function HomePage(props) {
     });
 
     return (
-        <div className="ui grid">
-            {renderDealSummaryList.length ? (
-                <div className="ui row">
-                    <div className="twelve wide column">
-                        <div className="ui three stackable cards">{renderDealSummaryList}</div>
-                    </div>
-                    <div className="four wide column">
-                        <div className="content">
-                            {selectedCause !== "" ? (
-                                <div
-                                    className="ui right floated mini inverted red button"
-                                    onClick={() => setSelectedCause("")}
-                                >
-                                    x Clear
-                                </div>
-                            ) : (
-                                ""
-                            )}
-
-                            <div className="ui title">Filter By Cause</div>
+        <React.Fragment>
+            <Search setDealList={setDealList} setCauseList={setCauseList} />
+            <div className="ui grid">
+                {renderDealSummaryList.length ? (
+                    <div className="ui row">
+                        <div className="twelve wide column">
+                            <div className="ui three stackable cards">{renderDealSummaryList}</div>
                         </div>
-                        <div className="ui divided selection list">{renderCauseList}</div>
+                        <div className="four wide column">
+                            <div className="content">
+                                {selectedCause !== "" ? (
+                                    <div
+                                        className="ui right floated mini inverted red button"
+                                        onClick={() => setSelectedCause("")}
+                                    >
+                                        x Clear
+                                    </div>
+                                ) : (
+                                    ""
+                                )}
+
+                                <div className="ui title">Filter By Cause</div>
+                            </div>
+                            <div className="ui divided selection list">{renderCauseList}</div>
+                        </div>
                     </div>
-                </div>
-            ) : (
-                <div className="ui active centered inline loader"></div>
-            )}
-        </div>
+                ) : (
+                    <div className="ui active centered inline loader"></div>
+                )}
+            </div>
+        </React.Fragment>
     );
 }
 
